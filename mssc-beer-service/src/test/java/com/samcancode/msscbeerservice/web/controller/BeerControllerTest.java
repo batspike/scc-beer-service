@@ -19,7 +19,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.samcancode.msscbeerservice.web.model.BeerDto;
 import com.samcancode.msscbeerservice.web.model.BeerStyleEnum;
 
-//@WebMvcTest(BeerController.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 class BeerControllerTest {
