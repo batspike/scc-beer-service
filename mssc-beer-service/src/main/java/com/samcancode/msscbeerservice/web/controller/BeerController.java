@@ -2,6 +2,7 @@ package com.samcancode.msscbeerservice.web.controller;
 
 import java.util.UUID;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,33 +14,43 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.samcancode.msscbeerservice.service.BeerService;
 import com.samcancode.msscbeerservice.web.model.BeerDto;
 
 @RestController
 @RequestMapping("/api/v1/beer")
 public class BeerController {
+	private final BeerService beerService;
+	
+	public BeerController(BeerService beerService) {
+		this.beerService = beerService;
+	}
+	
 	@GetMapping("/{beerId}")
 	public ResponseEntity<BeerDto> getBeerById(@PathVariable("beerId") UUID beerId) {
-		// todo
-		return new ResponseEntity<>(BeerDto.builder().build(), HttpStatus.OK);
+		return new ResponseEntity<>(beerService.getBeerById(beerId), HttpStatus.OK);
 	}
 	
 	@PostMapping
 	public ResponseEntity<BeerDto> saveNewBeer(@RequestBody BeerDto beerDto) {
-		// todo
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		BeerDto savedBeer = beerService.save(beerDto);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Location", "/api/v1/beer/" + savedBeer.getId().toString());
+		
+		return new ResponseEntity<>(headers, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/{beerId}")
 	public ResponseEntity<BeerDto> updateBeerById(@PathVariable("beerId") UUID beerId,
 												  @RequestBody BeerDto beerDto) {
-		// todo
+		beerService.update(beerId, beerDto);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 	
 	@DeleteMapping("/{beerId}")
 	public ResponseEntity<BeerDto> deleteBeerById(@PathVariable("beerId") UUID beerId) {
-		// to do
+		beerService.delete(beerId);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 	
