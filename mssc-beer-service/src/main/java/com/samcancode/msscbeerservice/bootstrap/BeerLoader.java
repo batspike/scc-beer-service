@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.samcancode.msscbeerservice.domain.Beer;
 import com.samcancode.msscbeerservice.repository.BeerRepository;
+import com.samcancode.msscbeerservice.web.model.BeerStyleEnum;
 
 @Component
 public class BeerLoader implements CommandLineRunner {
@@ -28,7 +29,7 @@ public class BeerLoader implements CommandLineRunner {
 			
 			beerRepo.save(Beer.builder()
 					.beerName("Mango Bobs")
-					.beerStyle("IPA")
+					.beerStyle(BeerStyleEnum.IPA)
 					.quantityToBrew(200)
 					.minOnHand(12)
 					.upc(3770099301L)
@@ -37,7 +38,7 @@ public class BeerLoader implements CommandLineRunner {
 			
 			beerRepo.save(Beer.builder()
 					.beerName("Galazy Cat")
-					.beerStyle("PALE_ALE")
+					.beerStyle(BeerStyleEnum.PALE_ALE)
 					.quantityToBrew(200)
 					.minOnHand(12)
 					.upc(3770099302L)
