@@ -1,34 +1,50 @@
 package com.samcancode.msscbeerservice.service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
+import com.samcancode.msscbeerservice.domain.Beer;
+import com.samcancode.msscbeerservice.repository.BeerRepository;
 import com.samcancode.msscbeerservice.web.model.BeerDto;
-import com.samcancode.msscbeerservice.web.model.BeerStyleEnum;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
 public class BeerServiceImpl implements BeerService {
+	private final BeerRepository beerRepo;
+	
+	public BeerServiceImpl(BeerRepository beerRepo) {
+		this.beerRepo = beerRepo;
+	}
 
 	@Override
 	public BeerDto getBeerById(UUID beerId) {
-		return BeerDto.builder().id(UUID.randomUUID())
-				.beerName("Galaxy Cat")
-				.beerStyle(BeerStyleEnum.ALE)
+		Optional<Beer> beer = beerRepo.findById(beerId);
+		
+		if(beer.isPresent()) {
+		return BeerDto.builder().id(beer.get().getId())
+				.beerName(beer.get().getBeerName())
+				.beerStyle(beer.get().getBeerStyle())
 				.build();
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override
 	public BeerDto save(BeerDto beerDto) {
-		log.info("Saving beerId" + beerDto.getId().toString());
+		Beer beer = Beer.builder()
+						.beerName(beerDto.getBeerName())
+						.beerStyle(beerDto.getBeerStyle())
+						.build();
+		Beer savedBeer = beerRepo.save(beer);
 		
-		return BeerDto.builder().id(UUID.randomUUID())
-				.beerName("Tiger Beer")
-				.beerStyle(BeerStyleEnum.ALE)
-				.build();
+		beerDto.setId(savedBeer.getId());
+		
+		return beerDto;
 	}
 
 	@Override
