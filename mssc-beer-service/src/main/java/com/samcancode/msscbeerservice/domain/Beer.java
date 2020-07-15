@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Version;
@@ -13,6 +15,8 @@ import javax.persistence.Version;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.samcancode.msscbeerservice.web.model.BeerStyleEnum;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,7 +46,9 @@ public class Beer {
 	private Timestamp lastModifiedDate;
 	
 	private String beerName;
-	private String beerStyle;
+	
+	@Enumerated(EnumType.STRING)
+	private BeerStyleEnum beerStyle;
 	
 	@Column(unique=true)
 	private Long upc;
