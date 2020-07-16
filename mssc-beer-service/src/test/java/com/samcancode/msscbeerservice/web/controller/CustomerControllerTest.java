@@ -44,7 +44,7 @@ class CustomerControllerTest {
 
 	@Test
 	void testUpdateCustById() throws Exception {
-		CustomerDto custDto = CustomerDto.builder().id(UUID.randomUUID()).name("Updated Customer").build();
+		CustomerDto custDto = CustomerDto.builder().name("Updated Customer").build();
 		String custDtoJson = objectMapper.writeValueAsString(custDto);
 		
 		mockMvc.perform(put("/api/v1/cust/"+ UUID.randomUUID().toString()).contentType(MediaType.APPLICATION_JSON).content(custDtoJson))
