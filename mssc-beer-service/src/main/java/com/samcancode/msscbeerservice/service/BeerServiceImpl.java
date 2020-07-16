@@ -27,6 +27,9 @@ public class BeerServiceImpl implements BeerService {
 		return BeerDto.builder().id(beer.get().getId())
 				.beerName(beer.get().getBeerName())
 				.beerStyle(beer.get().getBeerStyle())
+				.price(beer.get().getPrice())
+				.quantityOnHand(beer.get().getMinOnHand())
+				.upc(beer.get().getUpc())
 				.build();
 		}
 		else {
@@ -39,6 +42,10 @@ public class BeerServiceImpl implements BeerService {
 		Beer beer = Beer.builder()
 						.beerName(beerDto.getBeerName())
 						.beerStyle(beerDto.getBeerStyle())
+						.minOnHand(beerDto.getQuantityOnHand())
+						.price(beerDto.getPrice())
+						.quantityToBrew(300 - beerDto.getQuantityOnHand())
+						.upc(beerDto.getUpc())
 						.build();
 		Beer savedBeer = beerRepo.save(beer);
 		
