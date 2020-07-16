@@ -35,8 +35,7 @@ class CustomerControllerTest {
 
 	@Test
 	void testSaveNewCust() throws Exception {
-		CustomerDto custDto = CustomerDto.builder().id(UUID.randomUUID())
-												   .name("Good Customer")
+		CustomerDto custDto = CustomerDto.builder().name("New Customer")
 												   .build();
 		String custDtoJson = objectMapper.writeValueAsString(custDto);
 		
