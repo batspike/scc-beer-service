@@ -21,13 +21,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class BeerDto {
-	@Null
+	@Null //do not allow client to set this value
 	private UUID id;
 	
+	@Null //do not allow client to set this value
 	@Positive
 	private Integer version;
 	
+	@Null
 	private OffsetDateTime createdDate;
+	
+	@Null
 	private OffsetDateTime lastModifiedDate;
 	
 	@NotBlank

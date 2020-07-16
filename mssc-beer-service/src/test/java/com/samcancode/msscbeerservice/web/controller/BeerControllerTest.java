@@ -38,7 +38,6 @@ class BeerControllerTest {
 	@Test
 	void testSaveNewBeer() throws Exception {
 		BeerDto beerDto = BeerDto.builder()
-				.version(1)
 				.upc(321200001L)
 				.price(new BigDecimal("12.29"))
 				.quantityOnHand(200)
@@ -54,7 +53,6 @@ class BeerControllerTest {
 	@Test
 	void testUpdateBeerById() throws Exception {
 		BeerDto beerDto = BeerDto.builder()
-				.version(1)
 				.upc(321200002L)
 				.price(new BigDecimal("13.99"))
 				.quantityOnHand(300)
