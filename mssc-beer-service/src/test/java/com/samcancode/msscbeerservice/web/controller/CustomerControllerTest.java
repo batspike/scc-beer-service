@@ -29,14 +29,13 @@ class CustomerControllerTest {
 
 	@Test
 	void testGetCustById() throws Exception {
-		mockMvc.perform(get("/api/v1/cust/"+ UUID.randomUUID().toString()).accept(MediaType.APPLICATION_JSON))
+		mockMvc.perform(get("/api/v1/cust/"+ UUID.randomUUID()).accept(MediaType.APPLICATION_JSON))
 			   .andExpect(status().isOk());
 	}
 
 	@Test
 	void testSaveNewCust() throws Exception {
-		CustomerDto custDto = CustomerDto.builder().name("New Customer")
-												   .build();
+		CustomerDto custDto = CustomerDto.builder().id(null).name("New Customer").build();
 		String custDtoJson = objectMapper.writeValueAsString(custDto);
 		
 		mockMvc.perform(post("/api/v1/cust/").contentType(MediaType.APPLICATION_JSON).content(custDtoJson))
@@ -45,7 +44,7 @@ class CustomerControllerTest {
 
 	@Test
 	void testUpdateCustById() throws Exception {
-		CustomerDto custDto = CustomerDto.builder().build();
+		CustomerDto custDto = CustomerDto.builder().id(UUID.randomUUID()).name("Updated Customer").build();
 		String custDtoJson = objectMapper.writeValueAsString(custDto);
 		
 		mockMvc.perform(put("/api/v1/cust/"+ UUID.randomUUID().toString()).contentType(MediaType.APPLICATION_JSON).content(custDtoJson))
