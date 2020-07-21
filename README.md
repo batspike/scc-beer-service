@@ -1,2 +1,2 @@
-# mssc-beer-service
+# scc-beer-service
 Beer Brewery Microservice using Springboot
