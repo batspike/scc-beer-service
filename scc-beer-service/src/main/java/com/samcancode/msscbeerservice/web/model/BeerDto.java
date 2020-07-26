@@ -45,8 +45,7 @@ public class BeerDto {
 					BeerStyleEnum.SAISON})
 	private BeerStyleEnum beerStyle;
 	
-	@Positive
-	private Long upc;
+	private String upc;
 	
 	@Positive
 	private BigDecimal price;
