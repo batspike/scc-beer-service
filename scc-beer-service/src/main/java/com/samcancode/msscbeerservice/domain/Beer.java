@@ -14,6 +14,7 @@ import javax.persistence.Version;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.samcancode.msscbeerservice.web.model.BeerStyleEnum;
@@ -32,6 +33,7 @@ public class Beer {
 	@Id
 	@GeneratedValue(generator="UUID")
 	@GenericGenerator(name="UUID", strategy="org.hibernate.id.UUIDGenerator")
+	@Type(type="uuid-char") //this get rid of "sql error: 90004, sqlstate: 90004 hexadecimal string contains non-hex character" error when executing data.sql
 	@Column(length=36, columnDefinition="varchar", updatable=false, nullable=false)
 	private UUID id;
 	

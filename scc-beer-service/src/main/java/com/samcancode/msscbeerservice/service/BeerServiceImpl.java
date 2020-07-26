@@ -1,12 +1,11 @@
 package com.samcancode.msscbeerservice.service;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
-import com.samcancode.msscbeerservice.domain.Beer;
 import com.samcancode.msscbeerservice.repository.BeerRepository;
+import com.samcancode.msscbeerservice.web.mapper.BeerMapper;
 import com.samcancode.msscbeerservice.web.model.BeerDto;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,44 +13,21 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BeerServiceImpl implements BeerService {
 	private final BeerRepository beerRepo;
+	private final BeerMapper beerMapper;
 	
-	public BeerServiceImpl(BeerRepository beerRepo) {
+	public BeerServiceImpl(BeerRepository beerRepo, BeerMapper beerMapper) {
 		this.beerRepo = beerRepo;
+		this.beerMapper = beerMapper;
 	}
 
 	@Override
 	public BeerDto getBeerById(UUID beerId) {
-		Optional<Beer> beer = beerRepo.findById(beerId);
-		
-		if(beer.isPresent()) {
-		return BeerDto.builder().id(beer.get().getId())
-				.beerName(beer.get().getBeerName())
-				.beerStyle(beer.get().getBeerStyle())
-				.price(beer.get().getPrice())
-				.quantityOnHand(beer.get().getMinOnHand())
-				.upc(beer.get().getUpc())
-				.build();
-		}
-		else {
-			return null;
-		}
+		return beerMapper.beerToBeerDto(beerRepo.findById(beerId).orElse(null));
 	}
 
 	@Override
 	public BeerDto save(BeerDto beerDto) {
-		Beer beer = Beer.builder()
-						.beerName(beerDto.getBeerName())
-						.beerStyle(beerDto.getBeerStyle())
-						.minOnHand(beerDto.getQuantityOnHand())
-						.price(beerDto.getPrice())
-						.quantityToBrew(300 - beerDto.getQuantityOnHand())
-						.upc(beerDto.getUpc())
-						.build();
-		Beer savedBeer = beerRepo.save(beer);
-		
-		beerDto.setId(savedBeer.getId());
-		
-		return beerDto;
+		return beerMapper.beerToBeerDto(beerRepo.save(beerMapper.beerDtoToBeer(beerDto)));
 	}
 
 	@Override
